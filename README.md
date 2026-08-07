@@ -30,24 +30,6 @@ python chi_primitive/chi_primitive.py
 cd stress_suite && python run_suite.py
 ```
 
-## General finder (any system)
-
-```bash
-python dcl/find_chi.py              # full self-check (BANGER)
-python dcl/find_chi.py --one-word   # e.g. RUPTURE
-```
-
-```python
-from find_chi import log_chi, Observation
-word = log_chi(stream)   # CLEAR | SHADOW | RAPTURE | RUPTURE
-# never emits raw chi — safe for logs
-```
-
-Engineering brief: [ENGINEERING_BRIEF.txt](ENGINEERING_BRIEF.txt)
-
-Zero-lift axiom: true-zero is absorbing under × and ÷; only ± lifts a system out.
-χ is the shadow of that lift — not the distance scalar, not photon cargo.
-
 ## Contract
 
 ```python
@@ -71,13 +53,10 @@ non-reducible-commitment/
 ├── README.md
 ├── LICENSE
 ├── TECHNICAL_NOTE.md
-├── ENGINEERING_BRIEF.txt
 ├── RELEASE_NOTES.md
 ├── chi_primitive/
 │   ├── chi_primitive.py
 │   └── README.md
-├── dcl/
-│   └── find_chi.py          # general finder + one-word API
 └── stress_suite/
     ├── env_irreversible_door.py
     ├── env_polarity_tracker.py
