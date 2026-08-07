@@ -8,11 +8,11 @@ We extracted χ as a dependency-free primitive and tested it, unchanged, in thre
 
 | Environment | Full χ + reveal | Visible-history | Gap |
 |-------------|-----------------|-----------------|-----|
-| Irreversible Door | +11.0 | –5.8 | +16.8 |
-| Polarity Tracker | +20.0 | –0.3 | +20.3 |
-| Commitment-Gated Reconstruction | +11.1 | –1.5 | +12.6 |
+| Irreversible Door | +11.0 | +0.6 | +10.4 |
+| Polarity Tracker | +20.0 | −0.3 | +20.3 |
+| Commitment-Gated Reconstruction | +11.1 | −1.5 | +12.6 |
 
-Same object. Three domains. Same structural collapse when χ is removed; near-perfect recovery when it is restored.
+Same object. Three domains. Same structural collapse when χ is removed (or frozen wrong); near-perfect recovery when it is restored with the revealing channel.
 
 **Technical note (v0.2):** [TECHNICAL_NOTE.md](TECHNICAL_NOTE.md)
 
@@ -39,7 +39,7 @@ st = ChiState()              # χ ∈ {0,1}
 st.commit()                  # irreversible flip
 r  = st.reveal(alpha=0.20)   # titrated revealing channel
 p  = st.polarity()           # +1 / −1
-token = st.safe_token()      # never contains raw χ
+token = st.safe_token()      # never contains raw χ (uses peek)
 
 assert demonstrate_parity_trap()["claim_holds"]
 ```
