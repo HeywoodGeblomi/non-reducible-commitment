@@ -10,7 +10,7 @@ This document is the experimental protocol for the only test that can move the n
 ## 1. What is already prepared (local / controlled)
 
 1. Pure χ primitive — dependency-free, stdlib only, parity-trap self-check GREEN.
-2. Four controlled environments (Door, Polarity, Commitment-Gated Recon, Hard Regime-Shift) with adaptive pure-visible baselines defeated. These are explicit stress tests of $\mathcal{P}_{\text{parity}}$ by construction; they do not claim necessity on real agent trajectories.
+2. Controlled environments (Door, Polarity, Commitment-Gated Recon, Hard Regime-Shift, E*, E**) with adaptive pure-visible and stronger latent baselines defeated. These are explicit stress tests; they do not claim necessity on real agent trajectories.
 3. Eight-line inference-only CARM graft (`ReconstructionGate/carm/`) — injects only titrated $r_\chi$ ($\alpha_r=0.20$), safe token, and guidance hint. Never raw χ. Strict no-op when disabled or import fails.
 4. Synthetic CARM schedule — four-way ablation (Full / Frozen / No-reveal / Observer) GREEN on the controlled parity-trap schedule.
 5. MemHarness insertion mapping — reconstruction hook identified (`envs.step_with_memory` → `maybe_apply_memory_adaptor`). Retrieved pairs available; cleanest insertion point documented in `SURGICAL_PATCH.md`.
@@ -23,6 +23,8 @@ This document is the experimental protocol for the only test that can move the n
 - Official HF checkpoints for the base MemHarness agent
 
 None of the above are present in the current sandbox. No official baseline number will be reported until measured on the proper stack.
+
+See [HARDWARE.md](HARDWARE.md) for the exact blocked list, cheapest viable paths (quantized single-GPU / minimal multi-GPU / external cluster), and decision rule.
 
 ## 3. Exact experimental protocol (when hardware is available)
 
@@ -60,9 +62,9 @@ In addition to the pure-visible and frozen ablations, compare against at least o
 ## 4. Honesty rules (non-negotiable)
 
 - No official baseline number will be reported until it has been measured on the proper stack.
-- Controlled evidence (the four environments) remains controlled evidence of behaviour inside $\mathcal{P}_{\text{parity}}$. It is not evidence of necessity in real agent trajectories.
+- Controlled evidence remains controlled evidence of behaviour inside $\mathcal{P}_{\text{parity}}$. It is not evidence of necessity in real agent trajectories.
 - Any public communication of results must separate “controlled stress of the engineered process class” from “results on official long-horizon benchmarks.”
 
 ## 5. Current recommendation
 
-Execute the protocol above as soon as hardware is available. Until then the controlled stress suite (including hard regime-shift and adaptive pure-visible observers) is the strongest evidence that exists for the scoped claim inside $\mathcal{P}_{\text{parity}}$. It does not close the foundational gap.
+Execute the protocol above as soon as hardware is available. Until then the controlled stress suite (including E* and E**) is the strongest evidence that exists for the scoped claim inside $\mathcal{P}_{\text{parity}}$. It does not close the foundational gap.
