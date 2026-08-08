@@ -1,14 +1,12 @@
 # Commitment Stress Suite
 
-Controlled stress tests of the engineered process class $\mathcal{P}_{\text{parity}}$.
+Controlled stress tests related to the engineered process class $\mathcal{P}_{\text{parity}}$ and its immediate extension.
 
-> After an odd number of irreversible commitments, any pure function of the visible history is information-theoretically incomplete **inside this class**. Only a non-reducible commitment bit recovers correct behaviour.
-
-These environments are deliberately constructed so that observations remain informationally independent of the hidden polarity after flips. They demonstrate a clean ablation of a known failure mode. They do **not** claim that real long-horizon agent trajectories belong to $\mathcal{P}_{\text{parity}}$ or that $\chi$ is necessary on those trajectories.
+These environments demonstrate clean ablations of known failure modes under irreversible commitments. They do **not** claim that real long-horizon agent trajectories belong to $\mathcal{P}_{\text{parity}}$ or that $\chi$ is necessary on those trajectories.
 
 Each environment imports **only** `ChiState` from the pure primitive.
 
-## Environments
+## Environments inside pure observational equivalence
 
 | # | Name | Structural test |
 |---|------|-----------------|
@@ -17,28 +15,27 @@ Each environment imports **only** `ChiState` from the pure primitive.
 | 3 | Commitment-Gated Reconstruction | Drafts valid under only one polarity; ACCEPT/REJECT must track $\chi$ |
 | 4 | Hard Regime-Shift | H=80, ~10 flips, discrete non-stationary regimes that remain observationally equivalent across polarities |
 
-Adaptive pure-visible baselines (EMA, Bayes, change-point, regime-aware) are included and are defeated inside the class.
+Adaptive pure-visible baselines (EMA, Bayes, change-point, regime-aware) are defeated inside this class.
+
+## Environment that escapes pure observational equivalence
+
+| # | Name | Structural test |
+|---|------|-----------------|
+| 5 | E* (Escape) | Weak residual correlations with polarity (SNR ≈ 0.22) + independent bias drift; latent-state Bayesian filter and fixed residual buffer still fail; Full $\chi$ recovers ceiling |
+
+This is still a controlled stress test. It does not claim membership of real agent trajectories in $\mathcal{P}_{\text{parity}}$.
 
 ## Run
 
 ```bash
-python run_suite.py
-# or individually:
-python env_irreversible_door.py
-python env_polarity_tracker.py
-python env_commitment_gated_recon.py
-python env_hard_regime_shift.py
+python run_suite.py          # original four (inside pure observational equivalence)
+python env_escape_observational_equivalence.py   # E*
 ```
 
-## Expected pattern (all four)
+## Expected pattern
 
-| Method | Performance |
-|--------|-------------|
-| Reactive / no memory | ~chance |
-| Visible-history only | collapses after flips |
-| Adaptive pure-visible (EMA / Bayes / RegimeAware) | collapses after flips |
-| Full $\chi$ + reveal | high / theoretical ceiling |
-| Frozen $\chi$ | collapses or partial |
-| $\chi$, reveal disabled | collapses to visible-history |
+Inside pure observational equivalence: Full $\chi$ near ceiling; pure-visible and adaptive pure-visible collapse.
 
-`is_reducible(visible_history) == False` after an odd number of commits.
+On E*: Full $\chi$ near ceiling; Bayesian filter / FixedBuffer latent / EMA remain low (gaps ~85 points in the reported run). Residual carries real mutual information, yet ordinary latent-state trackers lose the parity under low SNR + bias drift + multiple irreversible flips.
+
+`is_reducible` helper remains False after odd commits on the parity-trap schedule.
