@@ -1,6 +1,6 @@
 # Commitment Stress Suite
 
-Controlled stress tests related to the engineered process class $\mathcal{P}_{\text{parity}}$ and its immediate extension.
+Controlled stress tests related to the engineered process class $\mathcal{P}_{\text{parity}}$ and its immediate extensions.
 
 These environments demonstrate clean ablations of known failure modes under irreversible commitments. They do **not** claim that real long-horizon agent trajectories belong to $\mathcal{P}_{\text{parity}}$ or that $\chi$ is necessary on those trajectories.
 
@@ -17,25 +17,27 @@ Each environment imports **only** `ChiState` from the pure primitive.
 
 Adaptive pure-visible baselines (EMA, Bayes, change-point, regime-aware) are defeated inside this class.
 
-## Environment that escapes pure observational equivalence
+## Environments that escape pure observational equivalence
 
 | # | Name | Structural test |
 |---|------|-----------------|
-| 5 | E* (Escape) | Weak residual correlations with polarity (SNR ≈ 0.22) + independent bias drift; latent-state Bayesian filter and fixed residual buffer still fail; Full $\chi$ recovers ceiling |
+| 5 | E* (Escape) | Weak residual (SNR ≈ 0.22) + independent bias drift; Bayesian / FixedBuffer / EMA still fail; Full $\chi$ recovers ceiling |
+| 6 | E** (Still-harder) | Moderate residual (SNR ≈ 0.40) + independent corr-sign flips + amplitude modulation + bias RW/jumps + residual-regime drift; stronger latents (Bayesian+process-noise, Hierarchical buffer, Multi-scale EMA, Kalman-style) still fail; Full $\chi$ recovers theoretical ceiling (+120) |
 
-This is still a controlled stress test. It does not claim membership of real agent trajectories in $\mathcal{P}_{\text{parity}}$.
+Both E* and E** remain controlled stress tests. They do not claim membership of real agent trajectories in $\mathcal{P}_{\text{parity}}$.
 
 ## Run
 
 ```bash
-python run_suite.py          # original four (inside pure observational equivalence)
+python run_suite.py                              # original four (inside pure observational equivalence)
 python env_escape_observational_equivalence.py   # E*
+python env_E_double_star.py                      # E**
 ```
 
 ## Expected pattern
 
 Inside pure observational equivalence: Full $\chi$ near ceiling; pure-visible and adaptive pure-visible collapse.
 
-On E*: Full $\chi$ near ceiling; Bayesian filter / FixedBuffer latent / EMA remain low (gaps ~85 points in the reported run). Residual carries real mutual information, yet ordinary latent-state trackers lose the parity under low SNR + bias drift + multiple irreversible flips.
+On E* / E**: Full $\chi$ near ceiling; latent-state and hierarchical baselines remain near zero (gaps ~85–120 points). Residual carries real mutual information, yet ordinary trackers lose the parity under non-stationarity + irreversible flips.
 
 `is_reducible` helper remains False after odd commits on the parity-trap schedule.

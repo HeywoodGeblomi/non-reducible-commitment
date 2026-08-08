@@ -13,6 +13,7 @@ We extracted χ as a dependency-free primitive and tested it in controlled envir
 | Commitment-Gated Reconstruction | +11.1 | collapse | +12–15 |
 | Hard Regime-Shift (H=80) | +80.0 | ~0 | ~80 |
 | E* (escapes pure obs. equivalence) | +90.0 | Bayesian / FixedBuffer ~3–5 | ~85 |
+| E** (still-harder) | +120.0 | Hierarchical / Multi-scale / Kalman / Bayesian+PN ~0–3 | ~117–120 |
 
 **These are controlled stress tests.**  
 They demonstrate clean ablations of known failure modes under irreversible commitments. They do **not** constitute evidence that real long-horizon agent trajectories belong to $\mathcal{P}_{\text{parity}}$, nor that χ is necessary or superior to existing latent-state / irreversible-memory mechanisms on those trajectories. Foundational advance on the open problem remains gated on official baselines or further work outside pure construction.
@@ -35,8 +36,9 @@ python chi_primitive/chi_primitive.py
 # Full stress suite (inside pure observational equivalence)
 cd stress_suite && python run_suite.py
 
-# E* (escapes pure observational equivalence)
+# E* / E** (escape pure observational equivalence)
 python env_escape_observational_equivalence.py
+python env_E_double_star.py
 ```
 
 ## Contract
@@ -75,6 +77,7 @@ non-reducible-commitment/
     ├── env_commitment_gated_recon.py
     ├── env_hard_regime_shift.py
     ├── env_escape_observational_equivalence.py
+    ├── env_E_double_star.py
     ├── run_suite.py
     └── README.md
 ```
