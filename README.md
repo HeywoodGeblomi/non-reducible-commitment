@@ -22,13 +22,25 @@ These are controlled stress tests. Results on official long-horizon agent benchm
 
 ## Quick start
 
+**Python**
 ```bash
-# Primitive self-check
 python chi_primitive/chi_primitive.py
-
-# Full stress suite
 cd stress_suite && python run_suite.py
 ```
+
+**C11** (opaque `ChiState` — raw χ never in public layout)
+```bash
+cd c
+gcc -O2 -std=c11 -DCHI_PRIMITIVE_DEMO -o chi_primitive chi_primitive.c -lm
+./chi_primitive
+
+gcc -O2 -std=c11 -o door_suite env_irreversible_door.c chi_primitive.c -lm
+gcc -O2 -std=c11 -o polarity_suite env_polarity_tracker.c chi_primitive.c -lm
+gcc -O2 -std=c11 -o recon_suite env_commitment_gated_recon.c chi_primitive.c -lm
+./door_suite && ./polarity_suite && ./recon_suite
+```
+
+C measured gaps: Door +22.0 · Polarity +21.7 · Recon +10.2
 
 ## Contract
 
@@ -56,6 +68,13 @@ non-reducible-commitment/
 ├── RELEASE_NOTES.md
 ├── chi_primitive/
 │   ├── chi_primitive.py
+│   └── README.md
+├── c/
+│   ├── chi_primitive.h
+│   ├── chi_primitive.c
+│   ├── env_irreversible_door.c
+│   ├── env_polarity_tracker.c
+│   ├── env_commitment_gated_recon.c
 │   └── README.md
 └── stress_suite/
     ├── env_irreversible_door.py
