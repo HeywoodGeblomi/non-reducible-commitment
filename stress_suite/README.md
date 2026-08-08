@@ -1,19 +1,44 @@
 # Commitment Stress Suite
 
-Three minimal environments. Same primitive. Same information gap.
+Controlled stress tests of the engineered process class $\mathcal{P}_{\text{parity}}$.
 
-Live numbers (`python run_suite.py`, 80 episodes):
+> After an odd number of irreversible commitments, any pure function of the visible history is information-theoretically incomplete **inside this class**. Only a non-reducible commitment bit recovers correct behaviour.
 
-| Environment | Full χ + reveal | Visible-history | Gap |
-|-------------|-----------------|-----------------|-----|
-| Irreversible Door | +11.0 | +0.6 | +10.4 |
-| Polarity Tracker | +20.0 | −0.3 | +20.3 |
-| Commitment-Gated Reconstruction | +11.1 | −1.5 | +12.6 |
+These environments are deliberately constructed so that observations remain informationally independent of the hidden polarity after flips. They demonstrate a clean ablation of a known failure mode. They do **not** claim that real long-horizon agent trajectories belong to $\mathcal{P}_{\text{parity}}$ or that $\chi$ is necessary on those trajectories.
 
-Frozen-χ ablations collapse on all three. Free choice at door-selection; χ is frozen only *after* the irreversible act.
+Each environment imports **only** `ChiState` from the pure primitive.
+
+## Environments
+
+| # | Name | Structural test |
+|---|------|-----------------|
+| 1 | Irreversible Door | One-shot irreversible choice; later observations identical across doors |
+| 2 | Polarity Tracker | Hidden polarity flips; observations identical across polarities |
+| 3 | Commitment-Gated Reconstruction | Drafts valid under only one polarity; ACCEPT/REJECT must track $\chi$ |
+| 4 | Hard Regime-Shift | H=80, ~10 flips, discrete non-stationary regimes that remain observationally equivalent across polarities |
+
+Adaptive pure-visible baselines (EMA, Bayes, change-point, regime-aware) are included and are defeated inside the class.
+
+## Run
 
 ```bash
 python run_suite.py
+# or individually:
+python env_irreversible_door.py
+python env_polarity_tracker.py
+python env_commitment_gated_recon.py
+python env_hard_regime_shift.py
 ```
 
-`is_reducible == False` after odd commits.
+## Expected pattern (all four)
+
+| Method | Performance |
+|--------|-------------|
+| Reactive / no memory | ~chance |
+| Visible-history only | collapses after flips |
+| Adaptive pure-visible (EMA / Bayes / RegimeAware) | collapses after flips |
+| Full $\chi$ + reveal | high / theoretical ceiling |
+| Frozen $\chi$ | collapses or partial |
+| $\chi$, reveal disabled | collapses to visible-history |
+
+`is_reducible(visible_history) == False` after an odd number of commits.
