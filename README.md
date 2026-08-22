@@ -20,6 +20,7 @@ They demonstrate clean ablations of known failure modes under irreversible commi
 
 **Technical note (v0.2):** [TECHNICAL_NOTE.md](TECHNICAL_NOTE.md)  
 **Formal claim (v0.1):** [FORMAL_CLAIM.md](FORMAL_CLAIM.md)  
+**χ Theorem specification (NRC-THM-001):** [docs/THEOREM.md](docs/THEOREM.md) — T1–T5 (completeness, rank-invariance, determinism, binding, operational hiding). Machine-checked in `tests/test_thm.py`. promote_ready=false until Phase C consumer.  
 **Maximal process class:** [MAXIMAL_PROCESS_CLASS.md](MAXIMAL_PROCESS_CLASS.md) — definition, MI claim, maximality condition  
 **Path to baseline:** [PATH_TO_BASELINE.md](PATH_TO_BASELINE.md) — complete protocol for official ALFWorld / WebShop (capacity-matched, stronger baselines required)
 
@@ -32,6 +33,9 @@ Official long-horizon agent baselines remain the open gate.
 ```bash
 # Primitive self-check
 python chi_primitive/chi_primitive.py
+
+# χ Theorem machine-check (NRC-THM-001 T1–T5)
+python -m unittest tests.test_thm -v
 
 # Full stress suite (inside pure observational equivalence)
 cd stress_suite && python run_suite.py
@@ -68,6 +72,10 @@ non-reducible-commitment/
 ├── MAXIMAL_PROCESS_CLASS.md
 ├── PATH_TO_BASELINE.md
 ├── RELEASE_NOTES.md
+├── docs/
+│   └── THEOREM.md          # NRC-THM-001 T1–T5 specification
+├── tests/
+│   └── test_thm.py         # machine-check for T1–T5
 ├── chi_primitive/
 │   ├── chi_primitive.py
 │   └── README.md
