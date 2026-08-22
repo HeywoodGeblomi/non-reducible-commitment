@@ -1,6 +1,6 @@
 # χ Theorem Specification (NRC-THM-001)
 
-**Status:** Phase T complete. promote_ready = false until Phase P greens all T statements.
+**Status:** Phase T + Phase P complete. T1–T5 machine-checked green on main. promote_ready = false (Phase C blocked — no consumer yet). χ is specified, not yet used.
 
 **Scope.** This document states five numbered, machine-checkable claims about the non-reducible commitment bit χ implemented by `ChiState` in this repository. It is a specification, not a Fields Medal theorem. Claims are scoped to the pure primitive and its use as a selector among already-tied alternatives. No physics, no MWI, no consciousness language, no sort policy.
 
@@ -31,17 +31,20 @@ After an odd number of commits, `is_reducible` returns False and the parity-trap
 ## Non-goals
 
 - No Lean / Coq formalization required.
-- No Phase C consumer wiring (PrymGyroSort `chi_pick`) in this change.
+- No Phase C consumer wiring (PrymGyroSort `chi_pick`) until deliberately GO’d.
 - No changes to gyro_rank.hpp, PhotonicSort, GeblomiSort, or any sorting policy.
 - No S-tier language. Grade target B / B+.
 
-## Acceptance (Phase T)
+## Acceptance
 
 | ID | Pass condition |
 |----|----------------|
 | T0 | This file exists with T1–T5 only |
+| P1 | Automated tests for T1–T4 green |
+| P2 | T5 fails pure hash-on-F; passes commit+reveal tape |
+| C0 | Phase C not started; promote_ready remains false |
 | X  | No forbidden files touched |
 
-Phase P will add automated tests for T1–T5. T5 must fail a pure-hash falsifier and pass the real commit+reveal tape.
+Machine-check: `python -m unittest tests.test_thm -v` (17 tests, OK).
 
 EXTERNAL-or-die remains a separate repository and claim surface.
