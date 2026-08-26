@@ -92,7 +92,7 @@ non-reducible-commitment/
 
 ## Related work
 
-Applications of the same primitive (residual diagnostics, reconstructive memory agents) live in the [reconstruction-gate](https://github.com/HeywoodGeblomi/reconstruction-gate) repository. This repository isolates the general object.
+Companion applications of this primitive (residual diagnostics, reconstructive memory) are private. This repository isolates the general object. Companion is private.
 
 ## License
 
